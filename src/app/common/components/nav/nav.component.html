@@ -1,0 +1,85 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary" [class.header_change]="header_variable">
+    <a class="navbar-brand" href="#">OMTB</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarColor01">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link" routerLink="/">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item" *ngIf="isCustomer">
+          <a class="nav-link" routerLink="/movies">All Movie</a>
+        </li>
+        <li class="nav-item" *ngIf="isCustomer">
+          <a class="nav-link" routerLink="/booking/view-booking">My Booking</a>
+        </li>
+   
+        <li class="nav-item dropdown" *ngIf="isAdmin">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Movie</a>
+            <div class="dropdown-menu dropdown-menu-right">
+              <a class="dropdown-item" routerLink="/movie/add-movie">Add Movie</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" routerLink="/movie/view-movie">View Movie</a>        
+            </div>
+        </li>
+        <li class="nav-item dropdown" *ngIf="isAdmin">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Theatre</a>
+          <div class="dropdown-menu dropdown-menu-right">
+            <a class="dropdown-item" routerLink="/theatre/add-theatre">Add Theatre</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" routerLink="/theatre/view-theatre">View Theatre</a>
+            <div class="dropdown-divider"></div>   
+            <a class="dropdown-item" routerLink="/theatre/search-theatre">Search Theatre</a>     
+          </div>
+      </li>
+      <li class="nav-item dropdown" *ngIf="isAdmin">
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Screen</a>
+        <div class="dropdown-menu dropdown-menu-right">
+          <a class="dropdown-item" routerLink="/screen/add-screen">Add Screen</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" routerLink="/screen/view-screen">View Screen</a>        
+        </div>
+    </li>
+    <li class="nav-item dropdown" *ngIf="isAdmin">
+      <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Shows</a>
+      <div class="dropdown-menu dropdown-menu-right">
+        <a class="dropdown-item" routerLink="/shows/add-show">Add Show</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" routerLink="/shows/view-show">View Shows</a>        
+      </div>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" routerLink="/aboutUs">About Us</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" routerLink="/contactUs">Contact Us</a>
+  </li>
+       
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/login" *ngIf="!isLogin">Login</a>
+        </li>
+        <li class="nav-item active" *ngIf="isLogin">
+          <a class="nav-link" (click)="logoutUser()" style="cursor: pointer;">Logout</a>
+      </li>
+   
+        <!--Drop Down Menu-->
+       <!-- <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">Something else here</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Separated link</a>
+          </div>
+        </li>-->
+      </ul>
+     <!-- <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="text" placeholder="Search">
+        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+      </form>-->
+    </div>
+  </nav>
+

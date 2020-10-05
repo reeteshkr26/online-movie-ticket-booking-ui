@@ -1,0 +1,49 @@
+
+<div fxLayoutAlign="center center" id="flex" [class.style_change]="style_variable">
+    <mat-card fxFlex="25">
+        <div class="alert alert-dismissible alert-success" *ngIf="loginSuccess">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Well done!</strong> You have been login Sucessfully!
+        </div>
+        
+        <mat-card-header>
+            <mat-card-title class="text-center">Login</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div *ngIf="!loginSuccess && btnClick"><mat-spinner style="margin:0 auto;" 
+                mode="indeterminate"></mat-spinner></div>
+            <form name="form" #loginform="ngForm" (ngSubmit)="loginUser()">
+                <small class="text-danger">{{msg}}</small>
+                <fieldset> 
+                    <div class="form-group">
+                        <label for="userid">Email:</label>
+                        <input type="email" class="form-control" placeholder="Enter email" name="email"
+                            [(ngModel)]="user.email" #email="ngModel" required
+                            [class.is-invalid]="email.invalid && email.touched">
+                        <small class="text-danger" [class.d-none]="email.valid || email.untouched ">Email is required</small>
+                    </div>
+        
+                    <div class="form-group">
+                        <label for="pwd">Password:</label>
+                        <input type="password" class="form-control" placeholder="Enter password" name="password"
+                            [(ngModel)]="user.password" #password="ngModel" required
+                            [class.is-invalid]="password.invalid && password.touched">
+                        <small class="text-danger" [class.d-none]="password.valid || password.untouched ">Password is
+                            required</small>
+                    </div>
+        
+                    <div class="checkbox">
+                        <label><input type="checkbox" name="remember"> Remember me</label>
+                    </div>                
+                      <div> 
+                        <button type="submit" class="btn btn-primary btn-lg btn-block" [disabled]="loginform.invalid">LOGIN</button>
+                      </div>
+                </fieldset>
+            </form>
+            <div class="alert alert-danger" *ngIf="isLoginError">invalid userId and password..!</div>
+        
+            <br>
+            <small [routerLink]="['/registration']" style="cursor: pointer;">New User ? Register here</small>
+        </mat-card-content>
+    </mat-card>
+ </div>  

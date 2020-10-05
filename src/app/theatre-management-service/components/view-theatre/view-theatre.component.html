@@ -1,0 +1,45 @@
+
+<div class="container" fxLayoutAlign="center center" fxFlexFill>
+    <div class="row">
+        <div class="col" *ngIf="isLoad"><mat-spinner></mat-spinner></div>
+        <div class="col" *ngIf="theatreList.length==0 && !isLoad">Data No Found</div>
+        <div class="alert alert-dismissible alert-success" *ngIf="success">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <strong>Movie Delete Sucessfull!</strong>.
+        </div>
+        <div class="col-md-12" *ngIf="theatreList.length!=0">
+         <p>Theater List</p>
+         <form class="form-inline">
+            <input class="form-control" name="searchInput" placeholder="Search" #searchInput="ngModel" [(ngModel)]="searchText"
+                style="width: 50%;">
+            <button class="btn btn-outline-primary" (click)="searchText=''">X</button>
+        </form>
+         <table class="table table-havor" >
+            
+             <thead>
+                
+               <tr class="table-primary">
+                 <th scope="col">Theater Id</th>
+                 <th scope="col">Theater Name</th>
+                 <th scope="col">Theater City</th>
+                 <th scope="col">Manager Name</th>
+                 <th scope="col">Manager Contact</th>
+                 <th scope="col">Action</th>
+               </tr>
+             </thead>
+             <tbody *ngFor="let theater of theatreList">
+               <tr class="table-dark" style="text-align:center" *ngIf="onSearch(theater)">
+                 <td>{{theater.theaterId}}</td>
+                 <td>{{theater.theaterName}}</td>
+                 <td>{{theater.theaterCity}}</td>
+                 <td>{{theater.managerName}}</td>
+                 <td>{{theater.managerContact}}</td>
+                 <td><button type="button" (click)="deleteTheater(theater)">
+                   <mat-icon>delete_sweep</mat-icon></button>
+                  </td>
+               </tr>
+             </tbody>
+           </table>
+  
+        </div>
+    </div>

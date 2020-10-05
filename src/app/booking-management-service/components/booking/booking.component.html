@@ -1,0 +1,171 @@
+<div class="container-fluid">
+ 
+  <div class="row">
+    <div class="col-sm-3 col-md-6 col-lg-4">
+      <div class="row">
+        <div class="col"></div>
+        <div class="col">
+          <div class="content" fxLayout="row wrap" fxLayoutGap="16px" id="flex" [class.style_change]="style_variable">
+            <mat-card fxFlex="100%" fxFlex.xs="100%" fxFlex.sm="33%">
+              <mat-card-header>
+                <mat-card-title>{{movie.movieName}}</mat-card-title>
+              </mat-card-header>
+              <img mat-card-image style="height: 200px;" src="assets/img/movie_1.jpg" alt="Card image">
+              <mat-card-content>
+                <p><strong *ngFor="let type of movie.movieType">{{type}} </strong> Movie in <strong
+                    *ngFor="let language of movie.movieLanguage">{{language }} </strong> </p>
+                <div class="row">
+                  <div class="col">
+                    <h3 class="card-text">{{movie.releasedDate|date}} </h3>
+                  </div>
+                  <div class="col-sm-4">
+                    <a href="#" class="text-danger">
+                      <mat-icon style="font-size: 40px;">video_library</mat-icon>
+                    </a>
+                  </div>
+                </div>
+              </mat-card-content>
+            </mat-card>
+
+          </div>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col"></div>
+        <div class="col-md-8">
+          <div class="content" fxLayout="row wrap" fxLayoutGap="16px" id="flex" [class.style_change]="style_variable">
+            <mat-card fxFlex="100%" fxFlex.xs="100%" fxFlex.sm="33%">
+              <div *ngIf="isLoad">
+                <mat-spinner></mat-spinner>
+              </div>
+              <mat-card-header>
+                <mat-card-title>PRICE DETAILS</mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                <div class="row">
+                  <div class="col">
+                    <p class="card-text"><strong>{{booking.noOfSeats}}</strong> TICKETS PRICE</p>
+                  </div>
+                  <div class="col">
+                    <strong><span style="color: black;"> {{ ticketTotalPrice | currency:'INR' }}</span></strong>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <label class="card-text">GST CHARGES </label>
+                  </div>
+                  <div class="col">
+                    <strong><span style="color: black;"> {{ gstCharge | currency:'INR' }}</span></strong>
+                  </div>
+                </div>
+                <hr class="hr1">
+                <div class="row">
+                  <div class="col">
+                    <label for="price" style="color: black;">Total Amount</label>
+                  </div>
+                  <div class="col">
+                    <strong><span style="color: black;"> {{ ticketTotalPrice + gstCharge | currency:'INR' }}</span></strong>
+                  </div>
+                </div>
+              </mat-card-content>
+            </mat-card>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-9 col-md-6 col-lg-8">
+      <div class="content" fxLayout="row wrap" fxLayoutGap="16px" id="flex" [class.style_change]="style_variable">
+
+        <mat-card fxFlex="50%" fxFlex.xs="100%" fxFlex.sm="33%">
+         
+          <mat-card-header>
+            <mat-card-title class="text-center">Booking Details</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div *ngIf="!success && btnClick"><mat-spinner style="margin:0 auto;" 
+              mode="indeterminate"></mat-spinner></div>
+            <form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit(f)">
+              <fieldset>
+                <div class="form-group">
+                  <label for="movieName">Movie Name</label>
+                  <input matInput required readonly type="text" class="form-control" name="movieName"
+                    [value]="movie.movieName">
+                </div>
+                <div class="form-group">
+                  <label for="director">Movie Director</label>
+                  <input matInput required readonly type="text" class="form-control" name="directorName"
+                    [value]="movie.movieDirector">
+                </div>
+                <div class="form-group">
+                  <label for="actor">Movie Actor</label>
+                  <input matInput readonly required type="text" class="form-control" name="actorName"
+                    [value]="movie.movieActor">
+                </div>
+                <div class="form-group">
+                  <label for="actress">Movie Actress</label>
+                  <input matInput readonly required type="text" class="form-control" name="actressName"
+                    [value]="movie.movieActress">
+                </div>
+
+                <div class="form-group">
+                  <label for="actress">Choose City</label>
+                  <select required class="form-control" [(ngModel)]="booking.city" name="cityName"
+                    (change)="selectChangeHandler($event)" #city="ngModel"
+                    [class.is-invalid]="city.invalid && city.touched">
+                    <option *ngFor="let city of cityList" [value]="city">{{city}}</option>
+                  </select>
+                  <div class="text-danger" [class.d-none]="city.valid || city.untouched ">Sorry, that city is required!
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="actress">Choose Theatre</label>
+                  <select required class="form-control" [(ngModel)]="booking.theaterId" name="theatre"
+                    [disabled]="theatreList.length===0" (change)="onChangeTheatre($event)" #theatre="ngModel"
+                    [class.is-invalid]="theatre.invalid && theatre.touched">
+                    <option *ngFor="let theatre of theatreList" [value]="theatre.theaterId">{{theatre.theaterName}}
+                    </option>
+                  </select>
+                  <div class="text-danger" [class.d-none]="theatre.valid || theatre.untouched ">Sorry, that theatre is
+                    required!</div>
+                </div>
+                <div class="form-group">
+                  <label for="actress">Choose Show</label>
+                  <select required class="form-control" [(ngModel)]="booking.showId" name="shows"
+                    [disabled]="showList.length===0" #show="ngModel" [class.is-invalid]="show.invalid && show.touched">
+                    <option *ngFor="let show of showList" [value]="show.showId">{{show.showName}}</option>
+                  </select>
+                  <div class="text-danger" [class.d-none]="show.valid || show.untouched ">Sorry, that show is required!
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="actress">Choose Date</label>
+                  <input matInput required type="date" class="form-control" name="bookingDate"
+                    [(ngModel)]="booking.dateOfShow" #bookingDate="ngModel"
+                    [class.is-invalid]="bookingDate.invalid && bookingDate.touched">
+                  <div class="text-danger" [class.d-none]="bookingDate.valid || bookingDate.untouched ">Sorry, that
+                    booking date is required!</div>
+                </div>
+                <div class="form-group">
+                  <label for="seats">No. of Seats</label>
+                  <input matInput required type="number" class="form-control" name="noOfseats"
+                    [(ngModel)]="booking.noOfSeats" #seat="ngModel" [class.is-invalid]="seat.invalid && seat.touched" (keyup)="calculateCost(booking.noOfSeats)">
+                  <div class="text-danger" [class.d-none]="seat.valid || seat.untouched ">Sorry, that No. of seats is
+                    required!</div>
+                </div>
+                <div class="form-group">
+                  <label for="price">Ticket Price(per head)</label>
+                  <input matInput required readonly type="number" class="form-control" name="pricePerHead" [value]="ticketPrice">
+                </div>
+                <div class="btn-group btn-group-toggle btn-lg btn-block" data-toggle="buttons">
+                  <button type="submit" class="btn btn-primary" [disabled]="f.invalid && booking.noOfSeats==0">Pay & Book</button>
+                </div>
+              </fieldset>
+            </form>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

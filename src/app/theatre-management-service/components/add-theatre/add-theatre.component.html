@@ -1,0 +1,85 @@
+<div fxLayoutAlign="center center" id="flex" [class.style_change]="style_variable">
+    <mat-card fxFlex="25">
+      
+        <div class="alert alert-dismissible alert-success" *ngIf="added">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Well done! Theatre Sucessfully created</strong>.
+          </div>
+          <div class="alert alert-dismissible alert-danger" *ngIf="errorOccurs">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Oh snap!</strong> {{errorMsg}} and try submitting again.
+          </div>
+        <mat-card-header>
+            <mat-card-title class="text-center">Add Theater</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div *ngIf="!added && btnClick"><mat-spinner style="margin:0 auto;" 
+            mode="indeterminate"></mat-spinner></div>
+            <form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit(f)">
+                <fieldset> 
+                    <div class="form-group">
+                        <label for="theaterName">Theater Name</label>
+                        <input 
+                        matInput 
+                        required
+                        type="text" 
+                        class="form-control" 
+                        name="theaterName"
+                        minlength="4" 
+                        maxlength="30"
+                        [(ngModel)]="theaterModel.theaterName"
+                        #name="ngModel" 
+                        placeholder="Enter Theater Name"
+                        >
+                      </div>
+                      <div class="form-group">
+                        <label for="theaterCity">Theater City</label>
+
+                        <select required name="city"class="form-control" #c="ngModel" [(ngModel)]="city">
+                          <option disabled selected value>Select City</option>
+                          <option *ngFor="let city of cityList" [value]="city">{{city}}</option>
+                        </select> 
+                      </div>
+                      
+                      <div class="form-group">
+                        <label for="manager">Manager Name</label>
+                        <input 
+                        matInput 
+                        required
+                        [pattern]="namePattern" 
+                        class="form-control" 
+                        name="managerName" 
+                        minlength="2"
+                        maxlength="30"
+                        [(ngModel)]="theaterModel.managerName"
+                        #managerName="ngModel" 
+                        placeholder="Enter Manager Name"
+                        > 
+                      </div>
+                      <div class="form-group">
+                        <label for="managerContact">Manager Contact</label>
+                        <input 
+                        matInput
+                        required 
+                        [pattern]="mobNumberPattern"
+                        class="form-control" 
+                        name="managerContact"
+                        minlength="10"
+                        maxlength="10"
+                        [(ngModel)]="theaterModel.managerContact"
+                        #managerContact="ngModel" 
+                        placeholder="Enter Manager Contact"
+                        >
+                      </div>
+                      
+                      <div class="btn-group btn-group-toggle btn-lg btn-block" data-toggle="buttons"> 
+                        <button type="submit" class="btn btn-primary" [disabled]="f.invalid || c.invalid">ADD</button>
+                        <button type="reset" class="btn btn-secondary">RESET</button>
+                      </div>
+                </fieldset>
+            </form>
+        </mat-card-content>
+    </mat-card>
+ </div>   
+
+

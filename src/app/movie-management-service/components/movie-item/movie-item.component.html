@@ -1,0 +1,21 @@
+      <mat-card class="mat-elevation-z4 card" >
+        <mat-card-header>
+          <mat-card-title>{{movieItem.movieName}}</mat-card-title>
+        </mat-card-header>
+        <img mat-card-image style="height: 200px;" src="assets/img/movie_1.jpg" alt="Card image">
+        <mat-card-content>
+            <p><strong *ngFor="let type of movieItem.movieType">{{type}} </strong> Movie </p>
+          <div class="row">
+            <div class="col">
+                <h3 class="card-text">{{movieItem.releasedDate|date}} </h3>
+            </div>
+            <div class="col-sm-4">
+                <a href="#" class="text-danger"><mat-icon style="font-size: 40px;">video_library</mat-icon></a> 
+            </div>
+        </div>
+        </mat-card-content>
+        <mat-card-actions>
+            <button type="button" class="btn btn-secondary btn-lg btn-block" (click)="movieDetails(movieItem)">View Details</button>
+        </mat-card-actions>
+      </mat-card>
+  

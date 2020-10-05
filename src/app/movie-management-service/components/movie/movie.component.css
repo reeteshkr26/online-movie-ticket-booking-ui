@@ -1,0 +1,25 @@
+.card-img-top{
+    max-height: 190.13px;
+    max-width: 338px;
+}
+img{
+    height: 250px;
+    width: 100%;
+}
+.col:not(:last-child) .inner {
+    margin: 2px; 
+  }
+  #carouselExampleIndicators{
+    margin-top: 2px;
+  }
+  .movieItem{
+      margin-top: 4px;
+  }
+
+  .content {
+    padding: 16px;
+}
+
+.content > mat-card {
+    width: 200px;
+}

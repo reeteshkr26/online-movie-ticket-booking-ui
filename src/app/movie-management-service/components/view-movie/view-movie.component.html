@@ -1,0 +1,58 @@
+
+<div class="container" fxLayoutAlign="center center" fxFlexFill>
+   <div class="row">
+    <div *ngIf="loadData">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div class="alert alert-dismissible alert-success" *ngIf="movieList.length==0 && !loadData">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong>No Data Found!</strong>.
+    </div>
+    <div class="alert alert-dismissible alert-success" *ngIf="success">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong>Movie Delete Sucessfull!</strong>.
+    </div>
+       <div class="col-md-12" *ngIf="movieList.length!=0">
+        <p>Movie List</p>
+        
+        <form class="form-inline">
+            <input class="form-control" name="searchInput" placeholder="Search" #searchInput="ngModel" [(ngModel)]="searchText"
+                style="width: 50%;">
+            <button class="btn btn-outline-primary" (click)="searchText=''">X</button>
+        </form>
+        <table class="table table-havor">
+           
+            <thead>
+               
+              <tr class="table-primary">
+                <th scope="col">Movie Id</th>
+                <th scope="col">Movie Name</th>
+                <th scope="col">Director</th>
+                <th scope="col">Released Date</th>
+                <th scope="col">Actor</th>
+                <th scope="col">Actress</th>
+                <th scope="col">Movie Language</th>
+                <th scope="col">Movie Type</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let movie of movieList">
+              <tr class="table-dark"  *ngIf="onSearch(movie)">
+                <td>{{movie.movieId}}</td>
+                <td>{{movie.movieName}}</td>
+                <td>{{movie.movieDirector}}</td>
+                <td>{{movie.releasedDate | date}}</td>
+                <td>{{movie.movieActor}}</td>
+                <td>{{movie.movieActress}}</td>
+                <td><span *ngFor="let language of movie.movieLanguage">{{language}}  </span></td>
+                <td><span *ngFor="let type of movie.movieType">{{type}}  </span></td>
+                <td><button type="button" (click)="deleteMovie(movie)"><mat-icon>delete_sweep</mat-icon></button></td>
+              </tr>
+            </tbody>
+          </table>
+ 
+       </div>
+   </div>
+       
+       
+  </div>

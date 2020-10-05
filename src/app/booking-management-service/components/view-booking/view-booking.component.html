@@ -1,0 +1,44 @@
+<div class="container" fxLayoutAlign="center center" fxFlexFill>
+    <div class="row">
+        <div class="col" *ngIf="bookingList.length==0">Data No Found</div>
+        <div class="col-md-12" *ngIf="bookingList.length!=0">
+         <p class="text-center" style="font-size: 30px;">My Bookings</p>
+    
+         <table class="table table-havor">
+            
+             <thead>
+                
+               <tr class="table-primary">
+                 <th scope="col">Booking Id</th>
+                 <th scope="col">Movie Name</th>
+                 <th scope="col">City</th>
+                 <th scope="col">Theatre Name</th>
+                 <th scope="col">Show Name</th>
+                 <th scope="col">No. of Tickets</th>
+                 <th scope="col">Amount</th>
+                 <th scope="col">Booking Date</th>
+                 <th scope="col">Status</th>
+                 <th scope="col">Action</th>
+               </tr>
+             </thead>
+             <tbody *ngFor="let ticket of bookingList">
+               <tr class="table-dark">
+                 <td scope="col">{{ticket.bookingId}}</td>
+                 <td scope="col">{{ticket.movieName}}</td>
+                 <td scope="col">{{ticket.city}}</td>
+                 <td scope="col">{{ticket.theatreName}}</td>
+                 <td scope="col">{{ticket.showName}}</td>
+                 <td scope="col">{{ticket.noOfSeats}}</td>
+                 <td scope="col">{{ticket.totalTicketPrice}}</td>
+                 <td scope="col">{{ticket.bookingDate}}</td>
+                 <td scope="col"><p *ngIf="ticket.ticketStatus==1">Booked</p><p><p *ngIf="ticket.ticketStatus==0">Canceled</p></td>
+                 <td><button type="button btn-primary" (click)="openCancelPopup(ticket)" *ngIf="ticket.ticketStatus==1">CANCEL</button><p class="text-success" *ngIf="ticket.ticketStatus==0">Refund Completed!</p></td>
+               </tr>
+             </tbody>
+           </table>
+  
+        </div>
+    </div>
+        
+        
+   </div>

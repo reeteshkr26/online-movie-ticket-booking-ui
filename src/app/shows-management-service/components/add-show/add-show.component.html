@@ -1,0 +1,87 @@
+<div fxLayoutAlign="center center" id="flex" [class.style_change]="style_variable">
+    <mat-card fxFlex="25">
+        <div class="alert alert-dismissible alert-success" *ngIf="added">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Well done! Show Sucessfully added</strong>.
+          </div>
+          <div class="alert alert-dismissible alert-danger" *ngIf="errorOccurs">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Oh snap!</strong> {{errorMsg}} and try submitting again.
+          </div>
+        <mat-card-header>
+            <mat-card-title class="text-center">Add Show</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div *ngIf="!added && btnClick"><mat-spinner style="margin:0 auto;" 
+                mode="indeterminate"></mat-spinner></div>
+            <form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit(f)">
+                <fieldset>
+                     <!--show name-->
+                    <div class="form-group">
+                        <label for="showName">Show name</label>
+                        <select required name="showName" class="form-control" #c="ngModel" [(ngModel)]="show.showName">
+                            <option disabled selected value>Show Names</option>
+                            <option *ngFor="let name of showNameList" [value]="name">{{name}}</option>
+                        </select>
+                    </div>
+                    <!--start time-->
+                    <div class="form-group">
+                        <label for="startTime">Show Start time</label>
+                        <input matInput required type="time" class="form-control" name="startTime"
+                            [(ngModel)]="show.startTime" #director="ngModel" placeholder="Enter Show Start time">
+                    </div>
+                    <!--end time-->
+                    <div class="form-group">
+                        <label for="endTime">Show End time</label>
+                        <input matInput required type="time" class="form-control" name="endTime"
+                            [(ngModel)]="show.endTime" #actor="ngModel" placeholder="Enter Show End time">
+                    </div>
+                    <!--city name-->
+                    <div class="form-group">
+                        <label for="city">select city</label>
+                        <select required name="city" class="form-control" (change)="selectChangeHandler($event)">
+                            <option disabled selected value>Select City</option>
+                            <option *ngFor="let city of cityList" [value]="city">{{city}}</option>
+                        </select>
+                    </div>
+                    <!--city name-->
+
+                    <!--theatre Id-->
+                       <div class="form-group">
+                        <label for="theater">Choose Theatre</label>
+                        <select required class="form-control" [(ngModel)]="show.theaterId" name="theatre"
+                          [disabled]="newTheaterList.length===0" #theatre="ngModel"
+                          [class.is-invalid]="theatre.invalid && theatre.touched" (change)="changeScreenInfo($event)">
+                          <option disabled selected value>Select Theater</option>
+                          <option *ngFor="let theatre of newTheaterList" [value]="theatre.theaterId">{{theatre.theaterName}}
+                          </option>
+                        </select>
+                        <div class="text-danger" [class.d-none]="theatre.valid || theatre.untouched ">Sorry, that theatre is
+                          required!</div>
+                      </div>
+                    <!--theatre Id-->
+                    <div class="form-group">
+                        <label for="screen">select Screen</label>
+                        <select required name="screen" class="form-control" [disabled]="newScreenList.length===0" [(ngModel)]="show.screenId" #screen="ngModel">
+                            <option disabled selected value>Select Screen</option>
+                            <option *ngFor="let sc of newScreenList" [value]="sc.screenId">{{sc.screenName}}</option>
+                        </select>
+                    </div>
+            
+                    <div class="form-group">
+                        <label for="movieId">Select Movie</label>
+                        <select required name="movieId" class="form-control" [disabled]="movieList.length===0" [(ngModel)]="show.movieId" #movie="ngModel">
+                            <option disabled selected value>Select Movie</option>
+                            <option *ngFor="let mv of movieList" [value]="mv.movieId">{{mv.movieName}}</option>
+                        </select>
+                    </div>
+
+                    <div class="btn-group btn-group-toggle btn-lg btn-block" data-toggle="buttons">
+                        <button type="submit" class="btn btn-primary" [disabled]="f.invalid">ADD</button>
+                        <button type="reset" class="btn btn-secondary">RESET</button>
+                    </div>
+                </fieldset>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

@@ -1,0 +1,81 @@
+<div fxLayoutAlign="center center" id="flex" [class.style_change]="style_variable">
+    <mat-card fxFlex="25">
+        
+        <div class="alert alert-dismissible alert-success" *ngIf="added">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Well done! Screen Sucessfully added</strong>.
+          </div>
+          <div class="alert alert-dismissible alert-danger" *ngIf="errorOccurs">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Oh snap!</strong> {{errorMsg}} and try submitting again.
+          </div>
+        <mat-card-header>
+            <mat-card-title class="text-center">Add Screen</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div *ngIf="!added && btnClick"><mat-spinner style="margin:0 auto;" 
+                mode="indeterminate"></mat-spinner></div>
+            <form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit(f)">
+                <fieldset> 
+                    <div class="form-group">
+                        <label for="theaterName">Screen Name</label>
+                        <input 
+                        matInput 
+                        required
+                        type="text" 
+                        class="form-control" 
+                        name="screenName"
+                        minlength="4" 
+                        maxlength="30"
+                        [(ngModel)]="screen.screenName"
+                        #name="ngModel" 
+                        [class.is-invalid]="name.invalid && name.touched"
+                        placeholder="Enter Screen Name"
+                        >
+                        <div class="text-danger" [class.d-none]="name.valid || name.untouched ">Sorry, that screen name is
+                            required!
+                        </div>
+                    </div>
+                      <div class="form-group">
+                        <label for="city">Choose City</label>
+                        <select required class="form-control" [(ngModel)]="screen.city" name="cityName"
+                          (change)="selectChangeHandler($event)" #city="ngModel"
+                          [class.is-invalid]="city.invalid && city.touched">
+                          <option *ngFor="let city of cityList" [value]="city">{{city}}</option>
+                        </select>
+                        <div class="text-danger" [class.d-none]="city.valid || city.untouched ">Sorry, that city is required!
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="theater">Choose Theatre</label>
+                        <select required class="form-control" [(ngModel)]="screen.theaterId" name="theatre"
+                          [disabled]="newTheaterList.length===0" #theatre="ngModel"
+                          [class.is-invalid]="theatre.invalid && theatre.touched">
+                          <option *ngFor="let theatre of newTheaterList" [value]="theatre.theaterId">{{theatre.theaterName}}
+                          </option>
+                        </select>
+                        <div class="text-danger" [class.d-none]="theatre.valid || theatre.untouched ">Sorry, that theatre is
+                          required!</div>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="seat">Choose Seat Capacity</label>
+                        <select required class="form-control" [(ngModel)]="screen.totalSeats" name="seatCapacity"
+                           #seat="ngModel"
+                          [class.is-invalid]="seat.invalid && seat.touched">
+                          <option *ngFor="let seatCap of seatCapacityList" [value]="seatCap">{{seatCap}}</option>
+                        </select>
+                        <div class="text-danger" [class.d-none]="seat.valid || seat.untouched ">Sorry, that Seat Capacity is required!
+                        </div>
+                      </div>
+                      
+                      <div class="btn-group btn-group-toggle btn-lg btn-block" data-toggle="buttons"> 
+                        <button type="submit" class="btn btn-primary" [disabled]="f.invalid">ADD</button>
+                        <button type="reset" class="btn btn-secondary">RESET</button>
+                      </div>
+                </fieldset>
+            </form>
+        </mat-card-content>
+    </mat-card>
+ </div>   
+

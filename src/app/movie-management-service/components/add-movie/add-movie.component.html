@@ -1,0 +1,170 @@
+<div fxLayoutAlign="center center" id="flex" [class.style_change]="style_variable">
+
+    <mat-card fxFlex="25">
+      <div class="alert alert-dismissible alert-success" *ngIf="success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Well done! Movie Sucessfully created</strong>.
+      </div>
+      <div class="alert alert-dismissible alert-danger" *ngIf="errorOccurs">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Oh snap!</strong> {{errorMsg}} and try submitting again.
+      </div>
+        <mat-card-header>
+            <mat-card-title class="text-center">Add Movie</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div *ngIf="!success && btnClick"><mat-spinner style="margin:0 auto;" 
+            mode="indeterminate"></mat-spinner></div>
+            <form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit(f)">
+                <fieldset> 
+                    <div class="form-group">
+                        <label for="movieName">Movie Name</label>
+                        <input 
+                        matInput 
+                        required
+                        type="text" 
+                        class="form-control" 
+                        name="movieName" 
+                        [(ngModel)]="movie.movieName"
+                        #name="ngModel" 
+                        placeholder="Enter Movie Name"
+                        [class.is-invalid]="name.invalid && name.touched"
+                        >
+                        <div class="text-danger" [class.d-none]="name.valid || name.untouched ">Sorry, that movie name is required!</div>
+                      </div>
+                      <div class="form-group">
+                        <label for="director">Movie Director</label>
+                        <input 
+                        matInput
+                        required 
+                        type="text" 
+                        class="form-control" 
+                        name="directorName" 
+                        [(ngModel)]="movie.movieDirector"
+                        #director="ngModel"
+                        placeholder="Enter Director Name"
+                        [class.is-invalid]="director.invalid && director.touched"
+                        > 
+                        <div class="text-danger" [class.d-none]="director.valid || director.untouched ">Sorry, that director name is required!</div>
+                      </div>
+                      <div class="form-group">
+                        <label for="actor">Movie Actor</label>
+                        <input 
+                        matInput 
+                        required
+                        type="text" 
+                        class="form-control" 
+                        name="actorName" 
+                        [(ngModel)]="movie.movieActor"
+                        #actor="ngModel" 
+                        placeholder="Enter Actor Name"
+                        [class.is-invalid]="actor.invalid && actor.touched"
+                        > 
+                        <div class="text-danger" [class.d-none]="actor.valid || actor.untouched ">Sorry, that actor name is required!</div>
+                      </div>
+                      <div class="form-group">
+                        <label for="actress">Movie Actress</label>
+                        <input 
+                        matInput
+                        required 
+                        type="text" 
+                        class="form-control" 
+                        name="actressName"
+                        [(ngModel)]="movie.movieActress"
+                        #actress="ngModel" 
+                        placeholder="Enter Actress Name"
+                        [class.is-invalid]="actress.invalid && actress.touched"
+                        > 
+                        <div class="text-danger" [class.d-none]="actress.valid || actress.untouched ">Sorry, that actress name is required!</div>
+                      </div>
+                      <div class="form-group">
+                        <label for="releasedDate">Movie Released date</label>
+                        <input 
+                        matInput
+                        required 
+                        type="date" 
+                        class="form-control" 
+                        name="releasedDate"
+                        [(ngModel)]="movie.releasedDate"
+                        #released="ngModel" 
+                        placeholder="Select Date"
+                        [class.is-invalid]="released.invalid && released.touched"
+                        > 
+                        <div class="text-danger" [class.d-none]="released.valid || released.untouched ">Sorry, that movie released date is required!</div>
+                      </div>
+    
+                        <div class="form-group">
+                            <label for="language">Movie Language</label>
+                            <ng-multiselect-dropdown
+                                    name="movieLanguage"
+                                    required
+                                    [placeholder]="'Select Language'"
+                                    [settings]="dropdownSettingsForLanguage"
+                                    [data]="movieLanguageList"
+                                    [(ngModel)]="selectedLanguage" 
+                                    (onSelect)="onItemSelect($event)"
+                                    (onSelectAll)="onSelectAll($event)"
+                                    #language="ngModel"
+                                    [class.is-invalid]="language.invalid && language.touched"
+                            >
+                            </ng-multiselect-dropdown>  
+                            <div class="text-danger" [class.d-none]="language.valid || language.untouched ">Sorry, that movie language is required!</div>                       
+                          </div>
+                          <div class="form-group">
+                            <label for="language">Movie Type</label>
+                            <ng-multiselect-dropdown
+                                    name="movieType"
+                                    required
+                                    [placeholder]="'Select Type'"
+                                    [settings]="dropdownSettingsForType"
+                                    [data]="movieTypeList"
+                                    [(ngModel)]="selectedMovieType" 
+                                    (onSelect)="onItemSelect($event)"
+                                    (onSelectAll)="onSelectAll($event)"
+                                    #type="ngModel"
+                                    [class.is-invalid]="type.invalid && type.touched"
+                            >
+                            </ng-multiselect-dropdown>  
+                            <div class="text-danger" [class.d-none]="type.valid || type.untouched ">Sorry, that movie type is required!</div>                          
+                          </div>
+                 
+                   
+                      <div class="form-group">
+                        <label for="movieLength">Movie Length</label>
+                        <input 
+                        matInput
+                        required
+                        type="number" 
+                        class="form-control" 
+                        name="movieLength"
+                        [(ngModel)]="movie.movieLength"
+                        #length="ngModel"
+                        placeholder="Enter Movie Length"
+                        [class.is-invalid]="length.invalid && length.touched"
+                        > 
+                        <div class="text-danger" [class.d-none]="length.valid || length.untouched ">Sorry, that movie length is required!</div>
+                      </div>
+                      <div class="form-group">
+                        <label for="rating">Movie Rating</label>
+                        <input
+                         matInput
+                         required 
+                         type="number" 
+                         class="form-control" 
+                         name="movieRating" 
+                         [(ngModel)]="movie.movieRating" 
+                         #rating="ngModel"
+                         placeholder="Enter Movie Rating"
+                         [class.is-invalid]="rating.invalid && rating.touched"
+                         > 
+                         <div class="text-danger" [class.d-none]="rating.valid || rating.untouched ">Sorry, that movie rating is required!</div>
+                      </div>
+                      <div class="btn-group btn-group-toggle btn-lg btn-block" data-toggle="buttons"> 
+                        <button type="submit" class="btn btn-primary" [disabled]="f.invalid">ADD</button>
+                        <button type="reset" class="btn btn-secondary">RESET</button>
+                      </div>
+                </fieldset>
+            </form>
+        </mat-card-content>
+    </mat-card>
+ </div>   

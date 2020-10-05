@@ -1,0 +1,57 @@
+<div class="container" fxLayoutAlign="center center" fxFlexFill>
+    <div class="row">
+        <div class="col" *ngIf="isLoad"><mat-spinner></mat-spinner></div>
+        <div class="col" *ngIf="showList.length==0 && !isLoad">Data No Found</div>
+        <div class="alert alert-dismissible alert-success" *ngIf="success">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <strong>Screen Delete Sucessfull!</strong>.
+        </div>
+        <div class="col-md-12" *ngIf="showList.length!=0">
+            <p>Shows List</p>
+            <form class="form-inline">
+                <input class="form-control" name="searchInput" placeholder="Search" #searchInput="ngModel"
+                    [(ngModel)]="searchText" style="width: 50%;">
+                <button class="btn btn-outline-primary" (click)="searchText=''">GO</button>
+            </form>
+            <table class="table table-havor">
+
+                <thead>
+
+                    <tr class="table-primary">
+                        <th scope="col">Show Id</th>
+                        <th scope="col">Show Name</th>
+                        <th scope="col">Start Time</th>
+                        <th scope="col">End Time</th>
+                        <th scope="col">Movie ID</th>
+                        <th scope="col">Movie Name</th>
+                        <th scope="col">Screen ID</th>
+                        <th scope="col">Screen Name</th>
+                        <th scope="col">Theatre ID</th>
+                        <th scope="col">Theatre Name</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody *ngFor="let show of showList">
+                    <tr class="table-dark" *ngIf="onSearch(show)">
+                        <td>{{show.showId}}</td>
+                        <td>{{show.showName}}</td>
+                        <td>{{show.startTime}}</td>
+                        <td>{{show.endTime}}</td>
+                        <td>{{show.movieId}}</td>
+                        <td>{{show.movieName}}</td>
+                        <td>{{show.screenId}}</td>
+                        <td>{{show.screenName}}</td>
+                        <td>{{show.theaterId}}</td>
+                        <td>{{show.theaterName}}</td>
+                        <td><button type="button" (click)="deleteShow(show)">
+                                <mat-icon>delete_sweep</mat-icon>
+                            </button></td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+
+</div>

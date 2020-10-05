@@ -1,0 +1,48 @@
+<div class="container" fxLayoutAlign="center center" fxFlexFill>
+    <div class="row">
+        <div class="col" *ngIf="isLoad"><mat-spinner></mat-spinner></div>
+        <div class="col" *ngIf="screenList.length==0 && !isLoad">Data No Found</div>
+        <div class="alert alert-dismissible alert-success" *ngIf="success">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <strong>Screen Delete Sucessfull!</strong>.
+        </div>
+        <div class="col-md-12" *ngIf="screenList.length!=0">
+         <p>Screen List</p>
+         <form class="form-inline">
+            <input class="form-control" name="searchInput" placeholder="Search" #searchInput="ngModel" [(ngModel)]="searchText"
+                style="width: 50%;">
+            <button class="btn btn-outline-primary" (click)="searchText=''">X</button>
+        </form>
+         <table class="table table-havor" >
+            
+             <thead>
+                
+               <tr class="table-primary">
+                 <th scope="col">Screen Id</th>
+                 <th scope="col">Screen Name</th>
+                 <th scope="col">Theater Id</th>
+                 <th scope="col">Theater Name</th>
+                 <th scope="col">Theater City</th>
+                 <th scope="col">Seat Capacity</th>
+                 <th scope="col">Available Seats</th>
+                 <th scope="col">Action</th>
+               </tr>
+             </thead>
+             <tbody *ngFor="let screen of screenList">
+               <tr class="table-dark" style="text-align:center" *ngIf="onSearch(screen)">
+                 <td>{{screen.screenId}}</td>
+                 <td>{{screen.screenName}}</td>
+                 <td>{{screen.theaterId}}</td>
+                 <td>{{screen.theaterName}}</td>
+                 <td>{{screen.city}}</td>
+                 <td>{{screen.totalSeats}}</td>
+                 <td>{{screen.availableSeats}}</td>
+                 <td><button type="button" (click)="deleteScreen(screen)">
+                   <mat-icon>delete_sweep</mat-icon></button>
+                  </td>
+               </tr>
+             </tbody>
+           </table>
+  
+        </div>
+    </div>
